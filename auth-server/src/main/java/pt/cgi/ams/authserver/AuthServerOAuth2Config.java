@@ -32,6 +32,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 public class AuthServerOAuth2Config
         extends AuthorizationServerConfigurerAdapter {
 
+    private static final String LOGIN_APP_CLIENT = "LOGIN_APP";
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
@@ -51,26 +52,15 @@ public class AuthServerOAuth2Config
         System.out.println("encoded secret: "+ secretEncoded);
 
         clients.inMemory()
-                .withClient("fooClientIdPassword")
+                .withClient(LOGIN_APP_CLIENT)
                 .secret(secretEncoded)
                 .authorizedGrantTypes("password", "authorization_code","client_credentials", "refresh_token")
                 .scopes("foo", "read", "write")
                 .accessTokenValiditySeconds(3600)
                 // 1 hour
                 .refreshTokenValiditySeconds(2592000)
-                .autoApprove(true)
                 // 30 days
-
-                .and()
-                .withClient("barClientIdPassword")
-                .secret("secret")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-                .scopes("bar", "read", "write")
-                .accessTokenValiditySeconds(3600)
-                // 1 hour
-                .refreshTokenValiditySeconds(2592000) // 30 days
                 .autoApprove(true);
-                
                 
     }
 

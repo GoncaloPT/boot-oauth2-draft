@@ -1,0 +1,45 @@
+<div class="container-fuild bg-dark" style="background-image: url('https://healthyhabits.pt/wp-content/uploads/2016/09/Depositphotos_24462033_original_1920.jpg');">
+
+    <div class="row">
+        <div class="col-lg-5 offset-2 pt-5 ">
+            <h1 class="mb-0 mt-4 display-4">CGI Portugal</h1>
+            <p class="mb-5">Login</p>
+        </div>
+        <div class="col-lg-3 mt-3 ">
+            <form class="p-5 section-light bg-light" (ngSubmit)="credencialsForm.valid && onLogin()" #credencialsForm="ngForm" autocomplete="off">
+                <h4 class="mb-3 text-center">Login</h4>
+                <hr>
+                <!-- email -->
+                <div class="form-group">
+                    <label >username</label>
+                    <input type="email" class="form-control" id="email" [(ngModel)]="credencials.email" name="email" attr.placeholder=" email "
+                        required>
+                </div>
+                <!-- password -->
+                <div class="form-group">
+                    <label >password</label>
+                    <input type="password" class="form-control" placeholder="password" id="password" [(ngModel)]="credencials.password" name="password"
+                        required>
+                </div>
+
+                <button type="submit" [disabled]="!credencialsForm.valid" class="btn mt-4 btn-block p-2 btn-secondary">
+                    <b>submeter</b>
+                </button>
+             
+              
+                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                />
+                <div *ngIf="showAuthError" class="alert alert-danger mt-4" role="alert" >
+                   Dados de login inválidos
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="showAuthError = !showAuthError">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-dark">
+   
+</div>

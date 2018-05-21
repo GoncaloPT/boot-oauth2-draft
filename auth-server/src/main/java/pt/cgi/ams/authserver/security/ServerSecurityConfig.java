@@ -1,12 +1,13 @@
 /*
  *  
  */
-package pt.cgi.ams.authserver;
+package pt.cgi.ams.authserver.security;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,13 +30,23 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity(debug = true)
 public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserService userService;
+
+    @Autowired
+    public ServerSecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.inMemoryAuthentication().
-                withUser("john").password("123").roles("USER").and().passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * TODO
+     * @return 
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
@@ -45,6 +56,7 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManagerBean()
             throws Exception {
+        
         return super.authenticationManagerBean();
     }
 

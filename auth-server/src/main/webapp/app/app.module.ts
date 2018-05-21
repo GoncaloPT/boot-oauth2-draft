@@ -1,0 +1,61 @@
+import './vendor.ts';
+import { NgModule, ViewContainerRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { LOGIN_ROUTE, LoginComponent, HHLoginModule } from './login';
+import { HHCommonModule } from './common';
+import { RouterModule, Routes } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import {
+    ErrorComponent,
+    errorRoute
+} from './structure';
+import { CenterViewComponent } from './structure/center-view/center-view.component';
+import { HHAuthModule, AuthTokenInterceptor } from './auth';
+import { HHUserModule } from './user';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SessionGuard } from './guards/session.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
+
+const APP_ROUTES = [
+    ...LOGIN_ROUTE,
+    ...errorRoute,
+]
+
+@NgModule({
+    imports: [
+        NgbModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        HHAuthModule,
+        HHUserModule,
+        HHCommonModule,
+        HHLoginModule,
+        NgbModule.forRoot(),
+        ToastModule.forRoot(),
+        RouterModule.forRoot(APP_ROUTES,
+            { useHash: true, enableTracing: false }
+        )
+    ],
+    declarations: [
+        AppComponent,
+        ErrorComponent,
+        CenterViewComponent,
+    ],
+    providers: [
+        SessionGuard,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
+      
+    ],
+    bootstrap: [
+        AppComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+
+export class HealthyHabitsAppModule {
+};

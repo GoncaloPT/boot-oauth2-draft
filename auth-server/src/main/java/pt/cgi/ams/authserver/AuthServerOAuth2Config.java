@@ -14,8 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -29,39 +31,46 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
  */
 @Configuration
 @EnableAuthorizationServer
+@EnableResourceServer
 public class AuthServerOAuth2Config
         extends AuthorizationServerConfigurerAdapter {
 
     private static final String LOGIN_APP_CLIENT = "LOGIN_APP";
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder encoder;
+    private final ClientDetailsService userDetailsService;
 
     @Autowired
-    private PasswordEncoder encoder;
+    public AuthServerOAuth2Config(AuthenticationManager authManager,
+            PasswordEncoder encoder,
+            ClientDetailsService userDetailsService) {
+        this.authenticationManager = authManager;
+        this.encoder = encoder;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()");
+                .checkTokenAccess("permitAll()");
+        //TODO IN PRODUCTION USE: .checkTokenAccess("isAuthenticated()");
     }
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         String secretEncoded = encoder.encode("secret");
-        System.out.println("encoded secret: "+ secretEncoded);
-
         clients.inMemory()
                 .withClient(LOGIN_APP_CLIENT)
                 .secret(secretEncoded)
-                .authorizedGrantTypes("password", "authorization_code","client_credentials", "refresh_token")
+                .authorizedGrantTypes("password", "authorization_code", "client_credentials", "refresh_token")
                 .scopes("foo", "read", "write")
                 .accessTokenValiditySeconds(3600)
                 // 1 hour
                 .refreshTokenValiditySeconds(2592000)
                 // 30 days
                 .autoApprove(true);
-                
+
     }
 
     @Bean
@@ -75,7 +84,9 @@ public class AuthServerOAuth2Config
 
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore()).approvalStoreDisabled();
+        endpoints.tokenStore(tokenStore()).tokenEnhancer(accessTokenConverter())
+                .authenticationManager(authenticationManager)
+                .setClientDetailsService(userDetailsService);
     }
 
     @Bean
@@ -85,7 +96,7 @@ public class AuthServerOAuth2Config
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
-        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        final JwtAccessTokenConverter converter = new CustomTokenEnhancer();
         // converter.setSigningKey("123");
         final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));

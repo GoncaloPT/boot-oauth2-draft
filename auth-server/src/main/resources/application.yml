@@ -1,0 +1,33 @@
+logging:
+    level:
+        org:
+            springframework:
+                web: INFO
+            hibernate: INFO
+        pt:
+            cgi: TRACE
+            
+spring:
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: false # we use gulp + BrowserSync for livereload
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost/auth-provider
+        username: root
+        password:   
+    jpa:
+        hibernate:
+            ddlAuto: create-drop
+            connection:
+                charset: utf8
+                useUnicode: true   
+        properties:
+            hibernate.showSql: false
+            hibernate.useSqlComments: true
+            hibernate.formatSql: true
+            hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+           
+        

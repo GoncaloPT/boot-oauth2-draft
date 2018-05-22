@@ -6,7 +6,8 @@ import { Credencials } from '../user/model/credencials.model';
 
 @Component({
     selector: 'hab-login',
-    templateUrl: 'login.component.html'
+    templateUrl: 'login.component.html',
+    styleUrls: ['./login.css']
 })
 export class LoginComponent implements OnInit {
     authenticationError: boolean;
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
         // this.credencials.email = 'ramoscc.joao@gmail.com';
         // this.credencials.password = 'hello';
 
-      
+
     }
     onLogin() {
         this.loading = true;
@@ -43,5 +44,5 @@ export class LoginComponent implements OnInit {
     goToRegisto() {
         this.router.navigate(['/registo']);
     }
- 
+
 }

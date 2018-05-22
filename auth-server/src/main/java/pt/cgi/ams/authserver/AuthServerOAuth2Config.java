@@ -60,6 +60,7 @@ public class AuthServerOAuth2Config
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         String secretEncoded = encoder.encode("secret");
+        System.out.println("secretEncoded: " + secretEncoded);
         clients.inMemory()
                 .withClient(LOGIN_APP_CLIENT)
                 .secret(secretEncoded)
@@ -97,7 +98,6 @@ public class AuthServerOAuth2Config
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new CustomTokenEnhancer();
-        // converter.setSigningKey("123");
         final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
         return converter;

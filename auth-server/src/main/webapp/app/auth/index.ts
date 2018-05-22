@@ -1,4 +1,5 @@
+export * from './token.holder';
 export * from './auth.service';
-export * from './user-session.holder';
-export * from './auth.module';
 export * from './auth-token.interceptor';
+export * from './oauth-response';
+export * from './auth.module';

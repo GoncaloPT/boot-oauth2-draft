@@ -1,12 +1,4 @@
-/*
- *  
- */
 package pt.cgi.ams.authserver.security;
-
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +7,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
 /**
- *
  * @author Gonçalo
  */
 @Configuration
@@ -45,18 +31,19 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * TODO
-     * @return 
+     *
+     * @return
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean()
             throws Exception {
-        
+
         return super.authenticationManagerBean();
     }
 
@@ -71,5 +58,17 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous().disable()
                 .csrf().disable();
         // @formatter:on
+    }
+
+    // decrypt password test
+    public static void main(String[] args) {
+        args = new String[]{"password"};
+        if (args.length < 1) {
+            throw new IllegalArgumentException("You must provide the plain text password for encryption");
+        }
+        String plainText = args[0];
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        
+        System.out.println("encoded password = " + encoder.encode(plainText));
     }
 }

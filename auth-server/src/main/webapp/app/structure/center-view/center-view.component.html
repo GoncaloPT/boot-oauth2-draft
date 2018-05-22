@@ -1,5 +1,37 @@
-<div class="container">
+<nav class="navbar bg-red">
+  <a class="navbar-brand" href="#">
+    <h1 class="text-light">CGI</h1>
+  </a>
+  <li class="nav-item d-block d-sm-none" *ngIf="user">
+    <a class="nav-link " [ngbPopover]="popContent" href="javascript:void(0);" id="dadosUtilizadorDropdown">
+
+    </a>
+
+  </li>
+  <div class="user-thumbnail" *ngIf="user ">
+    <img [ngbPopover]="popContent" popoverTitle="{{user.nomeCompleto}}" popoverClass="user-logo-popover" src="../../../content/images/user-logo.png"
+      alt="..." class="rounded-circle img-thumbnail d-none d-sm-block">
+
+
+  </div>
+
+
+</nav>
+<div class="container mt-4 ">
   <div class="center">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+
+
+<ng-template #popContent>
+  <ul class="list-group list-group-flush" style="width: 10rem">
+    <a class="list-group-item list-group-item-action flex-column align-items-start" routerLink="/dados-cliente" routerLinkActive="active">
+      Dados Cliente
+    </a>
+    <a (click)="logout()" class="list-group-item list-group-item-action flex-column align-items-start">
+      Logout
+    </a>
+  </ul>
+</ng-template>

@@ -1,7 +1,8 @@
 import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Injector, Injectable, OnInit } from '@angular/core';
-import { UserSessionHolder } from './user-session.holder';
+import { CookieService } from 'ngx-cookie-service';
+
 /**
  * This is a request interceptor
  * It's purpose is to add the authorization token to each request
@@ -11,11 +12,9 @@ export class AuthTokenInterceptor implements HttpInterceptor, OnInit {
     private token: string;
 
     constructor(
-        private session: UserSessionHolder
+         private cookieService: CookieService
     ) {
-        this.session.getSession().subscribe((token) => {
-            this.token = token.token;
-        })
+       
     }
     // Isto nao corre, vai-se la saber porque...
     ngOnInit() {
@@ -29,7 +28,7 @@ export class AuthTokenInterceptor implements HttpInterceptor, OnInit {
         }
 
         const cloned = req.clone({
-            headers: req.headers.set('x_auth_token',
+            headers: req.headers.set('authorization',
                 this.token)
         });
         return next.handle(cloned);
@@ -37,7 +36,7 @@ export class AuthTokenInterceptor implements HttpInterceptor, OnInit {
     }
     /** Only accepts if the url is different from login **/
     accept(req: HttpRequest<any>): boolean {
-        console.log('accept req.headers.has(x_auth_token):', req.headers.has('x_auth_token'));
-        return req.url.indexOf('api') > -1 && !req.headers.has('x_auth_token');
+        console.log('accept req.headers.has(authorization):', req.headers.has('authorization'));
+        return req.url.indexOf('api') > -1 && !req.headers.has('authorization');
     }
 }

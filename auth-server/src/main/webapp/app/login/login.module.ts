@@ -1,4 +1,4 @@
-import { LoginComponent, LOGIN_ROUTE } from '.';
+import { LoginComponent, LOGIN_ROUTE } from './';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';

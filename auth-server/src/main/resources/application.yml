@@ -20,7 +20,7 @@ spring:
         password:   
     jpa:
         hibernate:
-            ddlAuto: create-drop
+            ddlAuto: update
             connection:
                 charset: utf8
                 useUnicode: true   

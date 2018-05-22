@@ -3,16 +3,21 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { User } from '../user/model/user.model';
-import { UserSessionHolder } from './user-session.holder';
 import { UserService } from '../user/user.service';
 import { SocialUser } from 'angularx-social-login';
+import { CookieService } from 'ngx-cookie-service';
+/* import { HHAuthModule, OAuthTokenResponse } from './'; */
+import { TokenHolder } from './token.holder';
+import { OAuthTokenResponse } from './oauth-response';
+
+
 
 @Injectable()
 export class HHAuthService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private session: UserSessionHolder
+    private tokenHolder: TokenHolder
   ) {
 
   }
@@ -24,15 +29,23 @@ export class HHAuthService {
         "Authorization": "Basic " + btoa("LOGIN_APP:secret"),
         "Content-Type": "application/x-www-form-urlencoded"
       });
-      let body = "grant_type=password&username=silvagc&password=password";
 
+      let body = "grant_type=password&username={username}&password={password}";
+      //body.replace("{username}", credencials.username);
+      body = body.replace("{username}", "silvagc");
+      //body.replace("{password}", credencials.password);
+      body = body.replace("{password}", "password");
       this.http.post('oauth/token',
-        body, { headers: headers }).subscribe((response: HttpResponse<any>) => {
+        body, { headers: headers }).subscribe((response: OAuthTokenResponse) => {
           console.log(response);
+          this.tokenHolder.create(response);
           resolve(null);
         }, (error) => {
           reject(error);
         });
     });
+  }
+  logout(): void {
+    this.tokenHolder.invalidate();
   }
 }

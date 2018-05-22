@@ -2,7 +2,6 @@ import { Directive, TemplateRef, ViewContainerRef, Input, OnChanges, SimpleChang
 import { UserService } from '../../user';
 import { User } from '../../user/model/user.model';
 import { PerfilUtils } from '../../user/model/perfil.model';
-import { UserSessionHolder } from '../../auth';
 import { UserSession } from '../../user/model/user-session.model';
 
 @Directive({
@@ -11,25 +10,15 @@ import { UserSession } from '../../user/model/user-session.model';
 export class HabTemPerfilDirective implements OnChanges {
     @Input()
     private habTemPerfil: string;
-    constructor(private session: UserSessionHolder,
+    constructor(
         private templateRef: TemplateRef<any>,
         private viewContainerRef: ViewContainerRef) {
 
     }
     ngOnChanges(changes: SimpleChanges): void {
-        this.session.getSession().subscribe((session) => {
-            if (session.user != null) {
-              this.updateView(session);
-            }
-        })
+        //todo
+        this.viewContainerRef.createEmbeddedView(this.templateRef);
     }
-    private updateView(session: UserSession): void {
-        this.viewContainerRef.clear();
-
-        const temPerfil: boolean = PerfilUtils.temPerfilString(session, this.habTemPerfil);
-        if (temPerfil) {
-            this.viewContainerRef.createEmbeddedView(this.templateRef);
-        }
-    }
+   
 
 }

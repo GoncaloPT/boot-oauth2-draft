@@ -14,4 +14,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface UserRepositoryAndResource extends PagingAndSortingRepository<User, UUID> {
 
     public User findByLogin(@Param("login") String login);
+    
 }

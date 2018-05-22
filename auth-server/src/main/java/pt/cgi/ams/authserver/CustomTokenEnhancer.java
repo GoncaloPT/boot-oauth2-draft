@@ -22,8 +22,8 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
 		User user = (User) authentication.getPrincipal();
 
 		Map<String, Object> info = new LinkedHashMap<String, Object>(accessToken.getAdditionalInformation());
-
-		info.put("email", "goncalo@asd.pt");
+                
+		info.put("login", user.getUsername());
 
 		DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);
 		customAccessToken.setAdditionalInformation(info);

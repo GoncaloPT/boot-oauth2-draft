@@ -2,6 +2,7 @@ import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler, HttpResponse, Htt
 import { Observable } from 'rxjs/Observable';
 import { Injector, Injectable, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { TokenHolder } from '.';
 
 /**
  * This is a request interceptor
@@ -12,9 +13,11 @@ export class AuthTokenInterceptor implements HttpInterceptor, OnInit {
     private token: string;
 
     constructor(
-         private cookieService: CookieService
+         private tokenHolder: TokenHolder
     ) {
-       
+       this.tokenHolder.getToken().subscribe( oAuthToken => {
+           this.token = oAuthToken.scope + ' ' + oAuthToken.accessToken;
+       })
     }
     // Isto nao corre, vai-se la saber porque...
     ngOnInit() {

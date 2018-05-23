@@ -36,6 +36,7 @@ public class AuthServerOAuth2Config
         extends AuthorizationServerConfigurerAdapter {
 
     private static final String LOGIN_APP_CLIENT = "LOGIN_APP";
+    private static final String APP_TIAGO = "TIAGO_APP";
 
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder encoder;
@@ -60,7 +61,6 @@ public class AuthServerOAuth2Config
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         String secretEncoded = encoder.encode("secret");
-        System.out.println("secretEncoded: " + secretEncoded);
         clients.inMemory()
                 .withClient(LOGIN_APP_CLIENT)
                 .secret(secretEncoded)
@@ -69,6 +69,7 @@ public class AuthServerOAuth2Config
                 .accessTokenValiditySeconds(3600)
                 // 1 hour
                 .refreshTokenValiditySeconds(2592000)
+                
                 // 30 days
                 .autoApprove(true);
 

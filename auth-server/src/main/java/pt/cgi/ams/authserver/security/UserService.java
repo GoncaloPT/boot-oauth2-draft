@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
                 user.getPassword(), getSpringAuthorities(user));
     }
 
-    private List<org.springframework.security.core.GrantedAuthority> getSpringAuthorities(User user) {
+    public static List<org.springframework.security.core.GrantedAuthority> getSpringAuthorities(User user) {
         List<org.springframework.security.core.GrantedAuthority> authorities = new LinkedList<>();
         for (GrantedAuthority ga : user.getGrantedAuthorities()) {
             authorities.add(ga.getAuthorityId());

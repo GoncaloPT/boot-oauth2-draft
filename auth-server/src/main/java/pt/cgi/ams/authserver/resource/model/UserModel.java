@@ -1,7 +1,10 @@
 package pt.cgi.ams.authserver.resource.model;
 
 import java.time.Instant;
+import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
 import pt.cgi.ams.authserver.database.User;
+import static pt.cgi.ams.authserver.security.UserService.getSpringAuthorities;
 
 /**
  *
@@ -31,6 +34,15 @@ public class UserModel {
 
     private Instant resetDate = null;
 
+    private List<org.springframework.security.core.GrantedAuthority> authorities;
+
+    public List<GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
     public Long getUserId() {
         return userId;
     }
@@ -132,6 +144,22 @@ public class UserModel {
         model.setResetDate(user.getResetDate());
         model.setResetKey(user.getResetKey());
         model.setUserId(user.getUserId());
+        return model;
+    }
+    public static UserModel buildWithAuthorities(User user) {
+        UserModel model = new UserModel();
+        model.setActivated(user.isActivated());
+        model.setActivationKey(user.getActivationKey());
+        model.setEmail(user.getEmail());
+        model.setFirstName(user.getFirstName());
+        model.setImageUrl(user.getImageUrl());
+        model.setLangKey(user.getLangKey());
+        model.setLastName(user.getLastName());
+        model.setLogin(user.getLogin());
+        model.setResetDate(user.getResetDate());
+        model.setResetKey(user.getResetKey());
+        model.setUserId(user.getUserId());
+        model.setAuthorities(getSpringAuthorities(user));
         return model;
     }
 

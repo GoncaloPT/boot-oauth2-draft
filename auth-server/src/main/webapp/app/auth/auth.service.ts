@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { User } from '../user/model/user.model';
 import { UserService } from '../user/user.service';
-import { SocialUser } from 'angularx-social-login';
 import { CookieService } from 'ngx-cookie-service';
 /* import { HHAuthModule, OAuthTokenResponse } from './'; */
 import { TokenHolder } from './token.holder';
@@ -16,7 +15,8 @@ import { OAuthTokenResponse } from './oauth-response';
 export class HHAuthService {
   constructor(
     private http: HttpClient,
-    private userService: UserService,
+    private userService: UserService
+    ,
     private tokenHolder: TokenHolder
   ) {
 

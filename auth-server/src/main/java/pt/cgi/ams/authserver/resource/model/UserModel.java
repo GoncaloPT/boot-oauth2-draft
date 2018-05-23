@@ -3,7 +3,7 @@ package pt.cgi.ams.authserver.resource.model;
 import java.time.Instant;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
-import pt.cgi.ams.authserver.database.User;
+import pt.cgi.ams.authserver.db.User;
 import static pt.cgi.ams.authserver.security.UserService.getSpringAuthorities;
 
 /**

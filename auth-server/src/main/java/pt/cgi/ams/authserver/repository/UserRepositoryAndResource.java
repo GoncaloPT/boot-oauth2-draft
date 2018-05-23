@@ -2,7 +2,7 @@ package pt.cgi.ams.authserver.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import pt.cgi.ams.authserver.database.User;
+import pt.cgi.ams.authserver.db.User;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 

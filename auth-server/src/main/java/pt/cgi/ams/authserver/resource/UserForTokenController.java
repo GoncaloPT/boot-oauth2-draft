@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import pt.cgi.ams.authserver.database.User;
+import pt.cgi.ams.authserver.db.User;
 import pt.cgi.ams.authserver.exception.UserNotFoundException;
 import pt.cgi.ams.authserver.repository.UserRepositoryAndResource;
 import pt.cgi.ams.authserver.resource.model.UserModel;

@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import pt.cgi.ams.authserver.database.Authority;
-import pt.cgi.ams.authserver.database.GrantedAuthority;
-import pt.cgi.ams.authserver.database.User;
+import pt.cgi.ams.authserver.db.Authority;
+import pt.cgi.ams.authserver.db.GrantedAuthority;
+import pt.cgi.ams.authserver.db.User;
 import pt.cgi.ams.authserver.repository.UserRepositoryAndResource;
 
 /**

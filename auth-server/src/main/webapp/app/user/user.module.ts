@@ -1,8 +1,9 @@
-import { NgModule } from "@angular/core";
-import { UserService } from "./user.service";
+import { DadosPessoaisComponent } from './dados-pessoais/dados-pessoais.component';
+import { ListaUtilizadoresComponent } from './lista-utilizadores/lista-utilizadores.component';
+import { NgModule } from '@angular/core';
+import { UserService } from './user.service';
 import { HHCommonModule } from '../common';
-import { FormsModule } from "@angular/forms";
-import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -10,7 +11,8 @@ import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
         FormsModule
     ],
     declarations: [
-        ListaClienteComponent
+        ListaUtilizadoresComponent,
+        DadosPessoaisComponent
     ],
     providers: [
         UserService

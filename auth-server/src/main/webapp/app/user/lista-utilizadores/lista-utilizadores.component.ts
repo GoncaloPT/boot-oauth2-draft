@@ -9,11 +9,11 @@ import { PagedResponse } from '../../common/model/page-response.model';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'hab-lista-cliente',
-  templateUrl: './lista-cliente.component.html',
+  selector: 'hab-lista-utilizadores',
+  templateUrl: './lista-utilizadores.component.html',
   styles: []
 })
-export class ListaClienteComponent implements OnInit {
+export class ListaUtilizadoresComponent implements OnInit {
   public procura: ProcuraClienteModel;
   public usersPage: PagedResponse<User>;
   public pagination: PageRequestModel;
@@ -35,19 +35,19 @@ export class ListaClienteComponent implements OnInit {
       this.voltarParaUrlAnterior = params['goBack'];
     })
   }
-  procurar() {
-    console.log(this.pagination);
-    this.loading = true;
-    this.service.listaUtilizadoresPaginado(this.procura.idEmpresa, this.procura.nome, this.procura.email, this.pagination)
-      .then((usersPage) => {
-        this.loading = false;
-        this.usersPage = usersPage;
-        this.pagination.totalElements = usersPage.totalElements;
-      }).catch((err) => {
-        this.loading = false;
-        console.warn('listaUtilizadoresPaginado: ', err);
-      });
-  }
+  // procurar() {
+  //   console.log(this.pagination);
+  //   this.loading = true;
+  //   this.service.listaUtilizadoresPaginado(this.procura.idEmpresa, this.procura.nome, this.procura.email, this.pagination)
+  //     .then((usersPage) => {
+  //       this.loading = false;
+  //       this.usersPage = usersPage;
+  //       this.pagination.totalElements = usersPage.totalElements;
+  //     }).catch((err) => {
+  //       this.loading = false;
+  //       console.warn('listaUtilizadoresPaginado: ', err);
+  //     });
+  // }
  
   /**
    * Limpa a ProcuraClienteModel

@@ -1,43 +1,26 @@
+import { PerfilUtils } from './perfil.model';
 
 export class User{
-    public idUtilizador: number;
-    public primeiroNome: string;
-    public ultimoNome: string;
+    public userId: number;
+    public login: string;
+    public firstName: string;
+    public lastName: string;
+    public fullName: string;
     public email: string;
-    public dataNascimento: Date;
-    public mulher: boolean;
-    public profissao?: string;
-    public urlImagemPerfil?: string;
-    public nrTelefone?: number;
-    public nomeCompleto?: string;
-    public perfil?: string;
-    public idEmpresa?: number;
-    public nomeEmpresa?:string
-    public idLocal?: number;
-    public ativo: boolean;
-    public resultadoBiotipo : Number;
-    public resultadoCronotipo : Number;
-
-
-    constructor(
-        idUtilizador?: number,
-        primeiroNome?: string,
-        ultimoNome?: string,
-        email?: string,
-        dataNascimento?: number,
-        mulher?: boolean,
-        profissao?: string, 
-        urlImagemPerfil?: string,
-        nrTelefone?: number,
-        nomeCompleto?: string,
-        perfil?: string,
-        idEmpresa?: number,
-        idLocal?: number,
-        ativo?: boolean,
-        resultadoBiotipo ?: Number,
-        resultadoCronotipo ?: Number
-    ){
+    public authorities: Array<string>;  //pode ter várias?
+    public perfil: PerfilUtils;
     
+
+
+    constructor(userId?: number, login?: string, firstName?: string, lastName?: string,
+        email?: string, authorities?: Array<string>) {
+            this.userId = userId;
+            this.login = login;
+            this.email = email;
+            this.authorities = authorities;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.fullName = firstName + ' ' + lastName;
     }
 
 }

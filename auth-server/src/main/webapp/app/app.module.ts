@@ -48,7 +48,8 @@ const APP_ROUTES = [
         AppComponent,
         ErrorComponent,
         CenterViewComponent,
-        AppMenuComponent
+        AppMenuComponent,
+
     ],
     providers: [
         SessionGuard,

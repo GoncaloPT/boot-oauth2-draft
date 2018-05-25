@@ -3,34 +3,33 @@
   <a class="navbar-brand" href="#">
     <h1 class="text-light">CGI</h1>
   </a>
-  <li class="nav-item d-block d-sm-none" *ngIf="user">
-    <a class="nav-link " [ngbPopover]="popContent" href="javascript:void(0);" id="dadosUtilizadorDropdown">
 
-    </a>
+  <div *ngIf="isAdmin()">
+    <a class="text-light" routerLink="lista-utilizadores" routerLinkActive="active">Lista de utilizadores</a>
+  </div>
 
-  </li>
-  <div class="user-thumbnail" *ngIf="user ">
-    <img [ngbPopover]="popContent" popoverTitle="{{user.nomeCompleto}}" popoverClass="user-logo-popover" src="../../../content/images/user-logo.png"
+
+
+  <div class="user-thumbnail mr-4" *ngIf="user ">
+    <img [ngbPopover]="popContent" triggers="manual" (click)="p.toggle()" #p="ngbPopover" popoverTitle="{{user.fullName}}" src="../../../content/images/user-logo.png"
       alt="..." class="rounded-circle img-thumbnail d-none d-sm-block">
-
-
   </div>
 
 
 </nav>
 <!-- NAVBAR END -->
-<div class="container mt-4 ">
+
+<div class="container">
   <div class="center">
     <router-outlet></router-outlet>
   </div>
 </div>
 
-
-
 <ng-template #popContent>
   <ul class="list-group list-group-flush" style="width: 10rem">
-    <a class="list-group-item list-group-item-action flex-column align-items-start" routerLink="/dados-cliente" routerLinkActive="active">
-      Dados Cliente
+    <a class="list-group-item list-group-item-action flex-column align-items-start" routerLink="/dados-pessoais" (click)="p.close()"
+      routerLinkActive="active">
+      Dados pessoais
     </a>
     <a (click)="logout()" class="list-group-item list-group-item-action flex-column align-items-start">
       Logout

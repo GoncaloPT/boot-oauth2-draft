@@ -20,7 +20,7 @@ spring:
         password:   
     jpa:
         hibernate:
-            ddlAuto: create-drop
+            ddlAuto: update
             connection:
                 charset: utf8
                 useUnicode: true   
@@ -29,5 +29,6 @@ spring:
             hibernate.useSqlComments: true
             hibernate.formatSql: true
             hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
            
         

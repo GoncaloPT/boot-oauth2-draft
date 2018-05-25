@@ -1,3 +1,4 @@
+import { LISTA_UTILIZADORES_ROUTE, DADOS_PESSOAIS_ROUTE } from './../../user/user.route';
 import { Routes } from '@angular/router';
 import { CenterViewComponent } from './center-view.component';
 import { PERFIL } from '../../user/model/perfil.model';
@@ -17,11 +18,12 @@ export const CenterViewRoutes: Routes = [
                 canActivate: [],
                 canActivateChild: [],
                 children: [
-                    APPMENU_ROUTE
+                    APPMENU_ROUTE,
+                    LISTA_UTILIZADORES_ROUTE,
+                    DADOS_PESSOAIS_ROUTE
                 ]
             }
-
-
         ]
-    }
+    },
+
 ];

@@ -15,12 +15,10 @@ export const CenterViewRoutes: Routes = [
             {
                 path: '',
                 component: CenterViewComponent,
-                canActivate: [],
-                canActivateChild: [],
                 children: [
                     APPMENU_ROUTE,
-                    LISTA_UTILIZADORES_ROUTE,
-                    DADOS_PESSOAIS_ROUTE
+                    DADOS_PESSOAIS_ROUTE,
+                    LISTA_UTILIZADORES_ROUTE
                 ]
             }
         ]

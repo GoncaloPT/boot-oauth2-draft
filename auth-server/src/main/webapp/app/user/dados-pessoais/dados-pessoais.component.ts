@@ -1,6 +1,6 @@
 import { UserService } from './../user.service';
 import { OnInit, Component } from '@angular/core';
-import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
 import { User } from '../model/user.model';
 import { TokenHolder } from '../../auth';
 
@@ -14,13 +14,13 @@ export class DadosPessoaisComponent implements OnInit {
     // public currentUser: User;
     public currentUser: User = new User(1, 'silvagc', 'Gonçalo', 'Silva', 'go.silva@cgi.com', ['Admin', 'User'])
 
-    constructor(private uService: UserService) {
+    constructor(private uService: UserService, private router: Router) {
 
     }
 
     ngOnInit(): void {
         console.log('init');
-        // this.carregarDados();
+        this.carregarDados();
     }
 
     carregarDados() {
@@ -28,4 +28,8 @@ export class DadosPessoaisComponent implements OnInit {
             this.currentUser = user;
         })
     }
+
+    fechar() {
+        this.router.navigateByUrl('/');
+      }
 }

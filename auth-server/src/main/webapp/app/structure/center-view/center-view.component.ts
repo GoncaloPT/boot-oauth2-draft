@@ -18,6 +18,11 @@ export class CenterViewComponent implements OnInit {
     this.user.authorities = ['Admin', 'User'];
   }
 
+  //TODO
+  logout() {
+    return null;
+  }
+
   isAdmin() {
     return (this.user.authorities.indexOf('Admin') > -1);
   }

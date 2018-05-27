@@ -15,6 +15,7 @@ import { Location } from '@angular/common';
 })
 export class ListaUtilizadoresComponent implements OnInit {
   public procura: ProcuraClienteModel;
+  public ultimaProcura: ProcuraClienteModel;
   public usersPage: PagedResponse<User>;
   public pagination: PageRequestModel;
   public loading: boolean;
@@ -34,20 +35,29 @@ export class ListaUtilizadoresComponent implements OnInit {
     this.activeRoute.params.subscribe((params) => {
       this.voltarParaUrlAnterior = params['goBack'];
     })
+    this.service.getUsers().then((usersPage) => {
+      this.usersOriginal = usersPage;
+    })
   }
-  // procurar() {
-  //   console.log(this.pagination);
-  //   this.loading = true;
-  //   this.service.listaUtilizadoresPaginado(this.procura.idEmpresa, this.procura.nome, this.procura.email, this.pagination)
-  //     .then((usersPage) => {
-  //       this.loading = false;
-  //       this.usersPage = usersPage;
-  //       this.pagination.totalElements = usersPage.totalElements;
-  //     }).catch((err) => {
-  //       this.loading = false;
-  //       console.warn('listaUtilizadoresPaginado: ', err);
-  //     });
-  // }
+
+  procurar(paginacao?: boolean) {
+    console.log(this.pagination);
+    this.loading = true;
+    if (paginacao) {
+      this.procura = new ProcuraClienteModel(this.ultimaProcura.nome, this.ultimaProcura.login, this.ultimaProcura.email);
+    } else {
+      this.ultimaProcura = new ProcuraClienteModel(this.procura.nome, this.ultimaProcura.login, this.ultimaProcura.email);
+    }  
+    this.service.getUsersFiltered(this.procura.login, this.procura.nome, this.procura.email, this.pagination)
+      .then((usersPage) => {
+        this.loading = false;
+        this.usersPage = usersPage;
+        this.pagination.totalElements = usersPage.totalElements;
+      }).catch((err) => {
+        this.loading = false;
+        console.warn('listaUtilizadoresPaginado: ', err);
+      });
+  }
  
   /**
    * Limpa a ProcuraClienteModel

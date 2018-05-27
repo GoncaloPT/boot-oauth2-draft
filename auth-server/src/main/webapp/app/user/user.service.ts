@@ -14,6 +14,8 @@ import { TokenHolder } from '../auth/token.holder';
 export class UserService {
     constructor(private http: HttpClient) { }
 
+
+    //401 Unauthorized? É preciso colocar token no request? *
     getCurrent(): Promise<User> {
         return new Promise((resolve, reject) => {
             this.http.get<User>('user/current').subscribe((user: User) => {
@@ -25,14 +27,37 @@ export class UserService {
         });
     }
 
-    getUsers(): Promise<User[]> {
+    //*
+    getUsers(page?: PageRequestModel): Promise<PagedResponse<User>> {
+        if (!page) {
+            page = PageRequestModel.buildForPage(0);
+        }
         return new Promise((resolve, reject) => {
-            this.http.get<User[]>('user/').subscribe((users: User[]) => {
-                resolve(users);
+            this.http.get<PagedResponse<User>>('user/', {
+                params: page.getAsParams()
+            }).subscribe((usersPage) => {
+                resolve(usersPage);
             }, (err) => {
                 reject(err);
             });
         });
+    }
+
+    //TODO
+    getUsersFiltered(login?: string, nome?: string, email?: string, page?: PageRequestModel):
+    Promise<PagedResponse<User>> {
+        if (!page) {
+            page = PageRequestModel.buildForPage(0);
+        }
+        return new Promise((resolve, reject) => {
+            this.http.get<PagedResponse<User>>('user/', {
+                params: page.getAsParams()
+            }).subscribe((usersPage) => {
+                resolve(usersPage);
+            }, (err) => {
+                reject(err);
+            });
+        })
     }
 
     // getCurrentWithToken(token: string): Promise<User> {

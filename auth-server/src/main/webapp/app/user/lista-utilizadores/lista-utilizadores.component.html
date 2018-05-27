@@ -1,1 +1,78 @@
-user list
+<div class="container fill pt-4 pb-5">
+
+<h3>Lista de utilizadores</h3>
+<hr/>
+
+<form class="" (ngSubmit)="procurar()" #procuraForm="ngForm" autocomplete="off">
+    <div class="form-row">
+        <!-- Nome -->
+        <div class="col-12 col-lg-6">
+            <div class="row form-group">
+                <label for="nome" class="col-form-label col-lg-2 col-12">Nome:</label>
+                <div class="col-lg-10 col-12">
+                    <input type="text" [(ngModel)]="procura.nome" class="form-control" name="nome" placeholder="Filtre por nome">
+                </div>
+            </div>
+        </div>
+        <!-- Utilizador -->
+        <div class="col-12 col-lg-6">
+            <div class="row form-group">
+                <label for="nome" class="col-form-label col-lg-2 col-12">Utilizador:</label>
+                <div class="col-lg-10 col-12">
+                    <input type="text" [(ngModel)]="procura.login" class="form-control" name="nome" placeholder="FIltre por utilizador">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <!--Email -->
+        <div class="col-12 col-lg-6">
+            <div class="row form-group">
+                <label for="email" class="col-form-label col-lg-2 col-12">E-mail:</label>
+                <div class="col-lg-10 col-12">
+                    <input type="text" [(ngModel)]="procura.email" class="form-control" name="email" placeholder="Filtre por email">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Procurar</button>
+    <button type="button" class="btn btn-danger" [disabled]="procura.vazia()" (click)="limpar()">Limpar</button>
+    <!-- <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/> -->
+</form>
+
+<div class="row pt-4 table-responsive d-none d-lg-block">
+    <table class="table table-hover" *ngIf="usersPage != null && usersPage.content.length > 0">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Utilizador</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of usersPage.content">
+                <td>{{user.fullName}}</td>
+                <td>{{user.login}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.authorities}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="!usersPage || usersPage.content.length == 0" class="col-12 text-center">
+        Sem dados para mostrar
+    </div>
+</div>
+
+<div class="d-none d-lg-block">
+    <ngb-pagination class="d-flex justify-content-left" *ngIf="usersPage != null && usersPage.content.length > 0"
+        [collectionSize]="pagination.totalElements" 
+        [pageSize]="pagination.size" 
+        [(page)]="pagination.page" [boundaryLinks]="true"
+        [rotate]="true" (pageChange)="procurar(true)"></ngb-pagination>
+</div>
+
+</div>

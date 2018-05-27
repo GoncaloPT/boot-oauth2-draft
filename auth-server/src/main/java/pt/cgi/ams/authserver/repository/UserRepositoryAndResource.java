@@ -1,5 +1,6 @@
 package pt.cgi.ams.authserver.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import pt.cgi.ams.authserver.db.User;
@@ -15,4 +16,5 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public interface UserRepositoryAndResource extends PagingAndSortingRepository<User, Long> {
 
     public User findByLogin(@Param("login") String login);
+
 }

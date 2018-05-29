@@ -16,7 +16,9 @@ export class AuthTokenInterceptor implements HttpInterceptor, OnInit {
          private tokenHolder: TokenHolder
     ) {
        this.tokenHolder.getToken().subscribe( oAuthToken => {
-           this.token = oAuthToken.scope + ' ' + oAuthToken.accessToken;
+           console.log('oAuthToken: ', oAuthToken);
+           this.token = oAuthToken.token_type + ' ' + oAuthToken.access_token;
+
        })
     }
     // Isto nao corre, vai-se la saber porque...
@@ -40,6 +42,6 @@ export class AuthTokenInterceptor implements HttpInterceptor, OnInit {
     /** Only accepts if the url is different from login **/
     accept(req: HttpRequest<any>): boolean {
         console.log('accept req.headers.has(authorization):', req.headers.has('authorization'));
-        return req.url.indexOf('api') > -1 && !req.headers.has('authorization');
+        return !req.headers.has('authorization');
     }
 }

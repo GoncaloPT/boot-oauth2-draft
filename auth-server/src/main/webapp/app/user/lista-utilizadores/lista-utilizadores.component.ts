@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
   styles: []
 })
 export class ListaUtilizadoresComponent implements OnInit {
-  public procura: ProcuraClienteModel;
+  public procura: ProcuraClienteModel = new ProcuraClienteModel();
   public ultimaProcura: ProcuraClienteModel;
   public usersPage: PagedResponse<User>;
   public pagination: PageRequestModel;
